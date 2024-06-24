@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public class TableReader {
     private boolean isCorrectValues(List<String> values) {
         for (String value : values) {
-            if (!value.matches("^\\d*$")) {
+            if (!value.matches("^\\d*(\\.\\d+)?$")) {
                 return false;
             }
         }

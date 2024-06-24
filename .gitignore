@@ -1,4 +1,5 @@
 test*.txt
+lng-big.csv
 output.txt
 target/
 out/
