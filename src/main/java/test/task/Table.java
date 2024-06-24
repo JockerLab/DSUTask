@@ -21,7 +21,11 @@ public class Table {
 
     public String get(int row, int column) {
         if (row < table.size() && column < table.get(row).size()) {
-            return table.get(row).get(column);
+            String value = table.get(row).get(column);
+            if (value.isEmpty()) {
+                return null;
+            }
+            return value;
         }
 
         return null;
