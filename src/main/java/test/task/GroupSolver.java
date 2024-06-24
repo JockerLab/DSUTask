@@ -72,14 +72,14 @@ public class GroupSolver {
         List<List<Integer>> groupsCount = new ArrayList<>();
         Map<Integer, Integer> parentToGroupId = new HashMap<>();
 
-        for (int i = 0; i < parent.size(); i++) {
+        for (int i = 0; i < table.getRows(); i++) {
             int groupId;
 
-            if (parentToGroupId.containsKey(parent.get(i))) {
-                groupId = parentToGroupId.get(parent.get(i));
+            if (parentToGroupId.containsKey(getSet(i))) {
+                groupId = parentToGroupId.get(getSet(i));
             } else {
                 groupId = groupsCount.size();
-                parentToGroupId.put(parent.get(i), groupId);
+                parentToGroupId.put(getSet(i), groupId);
                 groupsCount.add(new ArrayList<>(List.of(0, groupId)));
             }
 
@@ -97,7 +97,7 @@ public class GroupSolver {
         }
 
         for (int row = 0; row < table.getRows(); row++) {
-            int groupId = parentToGroupId.get(parent.get(row));
+            int groupId = parentToGroupId.get(getSet(row));
             int sortedId = groupToSortedId.get(groupId);
             groups.get(sortedId).add(row);
         }
