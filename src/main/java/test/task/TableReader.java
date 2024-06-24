@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public class TableReader {
     private boolean isCorrectValues(List<String> values) {
@@ -21,13 +21,23 @@ public class TableReader {
     }
 
     private List<String> parseStringColumns(String line) {
-        return Stream.of(line.split(";"))
-            .map(String::trim)
-            .map(e ->
-                (e.startsWith("\"") && e.endsWith("\""))
-                    ? e.substring(1, e.length() - 1)
-                    : e
-            ).toList();
+        String[] separatedValues = line.split(";");
+        int countSemicolons = (int)line.chars().filter(ch -> ch == ';').count();
+        String[] parsedValues = new String[countSemicolons + 1];
+
+        for (int i = 0; i <= countSemicolons; i++) {
+            if (i < separatedValues.length) {
+                String parsedValue = separatedValues[i].trim();
+                if (parsedValue.startsWith("\"") && parsedValue.endsWith("\"")) {
+                    parsedValue = parsedValue.substring(1, parsedValue.length() - 1);
+                }
+                parsedValues[i] = parsedValue;
+            } else {
+                parsedValues[i] = "";
+            }
+        }
+
+        return Arrays.stream(parsedValues).toList();
     }
 
     /**
